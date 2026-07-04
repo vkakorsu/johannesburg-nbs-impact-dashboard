@@ -1,0 +1,33 @@
+{
+  "name": "suncasa-jukskei-dashboard",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "MVP public-facing dashboard communicating the impact of SUNCASA nature-based solutions along the Jukskei River, Johannesburg.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "ingest": "node scripts/ingest.mjs",
+    "export": "node scripts/export.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.3.0",
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^5.13.0",
+    "leaflet": "^1.9.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-leaflet": "^5.0.0",
+    "recharts": "^2.15.0",
+    "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.12",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "xlsx": "^0.18.5"
+  }
+}

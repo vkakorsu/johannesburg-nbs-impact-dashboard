@@ -1,0 +1,73 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "note": "Illustrative intervention sites along the Jukskei River in Alexandra, Johannesburg. Geometries are approximate placeholders and will be confirmed from the SUNCASA data catalogue during Inception.",
+    "crs": "EPSG:4326"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "site-01",
+        "name": "Alexandra riverbank rehabilitation",
+        "pillar": "flood",
+        "type": "Riparian rehabilitation",
+        "summary": "Debris removal and bank stabilisation along a cleared reach of the Jukskei."
+      },
+      "geometry": { "type": "Point", "coordinates": [28.1006, -26.1015] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "site-02",
+        "name": "Community tree planting corridor",
+        "pillar": "heat",
+        "type": "Urban tree planting",
+        "summary": "Street and open space tree planting to expand shade and cool the neighbourhood."
+      },
+      "geometry": { "type": "Point", "coordinates": [28.0954, -26.1043] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "site-03",
+        "name": "Riparian restoration reach",
+        "pillar": "environment",
+        "type": "Riparian corridor",
+        "summary": "Indigenous species planting to restore habitat and filter runoff."
+      },
+      "geometry": { "type": "Point", "coordinates": [28.1052, -26.0987] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "site-04",
+        "name": "Water Warriors work site",
+        "pillar": "socio",
+        "type": "Community employment",
+        "summary": "Local women and youth employed in cleanup and restoration activities."
+      },
+      "geometry": { "type": "Point", "coordinates": [28.0989, -26.1067] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "reach-main",
+        "name": "Jukskei intervention corridor",
+        "pillar": "flood",
+        "type": "River reach",
+        "summary": "Primary SUNCASA intervention corridor along the Jukskei through Alexandra."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [28.0921, -26.1078],
+          [28.0967, -26.1052],
+          [28.1006, -26.1015],
+          [28.1041, -26.0993],
+          [28.1078, -26.0968]
+        ]
+      }
+    }
+  ]
+}

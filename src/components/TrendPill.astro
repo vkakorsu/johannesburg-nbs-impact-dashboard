@@ -1,0 +1,24 @@
+---
+interface Props {
+  trend: "up" | "down" | "flat";
+  // For some indicators a downward trend is the goal (e.g. flood extent).
+  goodDirection?: "up" | "down";
+}
+const { trend, goodDirection = "up" } = Astro.props;
+
+const isGood = trend === "flat" ? true : trend === goodDirection;
+const labelKey = trend === "up" ? "trend.up" : trend === "down" ? "trend.down" : "trend.flat";
+const arrow = trend === "up" ? "M7 17L17 7M17 7H9M17 7v8" : trend === "down" ? "M7 7l10 10M17 17H9M17 17V9" : "M5 12h14";
+---
+
+<span
+  class:list={[
+    "inline-flex items-center gap-1 whitespace-nowrap rounded-sm px-1.5 py-0.5 text-xs font-semibold",
+    isGood ? "bg-emerald/10 text-emerald-mid" : "bg-clay/10 text-clay",
+  ]}
+>
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d={arrow} />
+  </svg>
+  <span data-i18n={labelKey} class="sr-only sm:not-sr-only"></span>
+</span>

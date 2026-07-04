@@ -1,0 +1,82 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { t } from "../i18n";
+import { indicators, getPillar } from "../data";
+---
+
+<BaseLayout active="data" title="About the data" description="Indicator definitions, sources, and limitations for the SUNCASA Jukskei dashboard.">
+  <section class="border-b border-rule bg-paper-warm/40">
+    <div class="mx-auto max-w-page px-5 py-14">
+      <p class="eyebrow text-emerald" data-i18n="hero.eyebrow">SUNCASA Johannesburg</p>
+      <h1 class="headline mt-3 text-4xl text-charcoal" data-i18n="data.title">About the data</h1>
+      <p class="mt-4 max-w-prose text-lg text-charcoal/80" data-i18n="data.body">
+        The dashboard uses existing SUNCASA monitoring data and selected public sources. No new data was collected. Values shown in this prototype are illustrative and await the SUNCASA data catalogue.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-page px-5 py-14">
+    <h2 class="headline text-2xl text-charcoal" data-i18n="data.meta.title">Indicator definitions and metadata</h2>
+    <p class="mt-2 max-w-prose text-charcoal/70" data-i18n="data.meta.body">
+      Every indicator follows the SUNCASA indicator model: a plain language name, a reason it matters, the latest value, a source, an update frequency, and clear caveats.
+    </p>
+
+    <div class="mt-8 overflow-x-auto rounded-md border border-rule">
+      <table class="w-full border-collapse text-left text-sm">
+        <thead class="bg-charcoal text-paper">
+          <tr>
+            <th class="px-4 py-3 font-semibold" data-i18n="data.table.indicator">Indicator</th>
+            <th class="px-4 py-3 font-semibold" data-i18n="data.table.theme">Theme</th>
+            <th class="px-4 py-3 font-semibold" data-i18n="data.table.framework">Framework</th>
+            <th class="px-4 py-3 font-semibold" data-i18n="data.table.status">Status</th>
+            <th class="px-4 py-3 font-semibold" data-i18n="data.table.unit">Unit</th>
+            <th class="px-4 py-3 font-semibold" data-i18n="data.table.latest">Latest</th>
+            <th class="px-4 py-3 font-semibold" data-i18n="data.table.update">Update</th>
+          </tr>
+        </thead>
+        <tbody>
+          {indicators.map((ind, i) => {
+            const pillar = getPillar(ind.pillar);
+            return (
+              <tr class:list={[i % 2 === 0 ? "bg-paper" : "bg-paper-warm/40", "border-t border-rule"]}>
+                <td class="px-4 py-3 font-medium text-charcoal" data-i18n={`ind.${ind.id}.name`}>{ind.name.en}</td>
+                <td class="px-4 py-3 text-charcoal/75" data-i18n={pillar.labelKey}>{t(pillar.labelKey)}</td>
+                <td class="px-4 py-3 text-charcoal/75">{ind.framework}</td>
+                <td class="px-4 py-3">
+                  <span class:list={[
+                    "rounded-full px-2 py-0.5 text-xs font-semibold",
+                    ind.status === "proposed" ? "bg-clay/10 text-clay" : "bg-emerald/10 text-emerald-mid",
+                  ]}>{ind.status}</span>
+                </td>
+                <td class="px-4 py-3 text-charcoal/75">{ind.unit}</td>
+                <td class="px-4 py-3 tnum text-charcoal">{ind.latestValue ?? "n/a"}</td>
+                <td class="px-4 py-3 text-charcoal/75" data-i18n={`ind.${ind.id}.frequency`}>{ind.frequency.en}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      <div class="rounded-md border border-rule bg-paper p-5">
+        <h3 class="headline text-lg text-charcoal" data-i18n="data.sources.title">Data sources</h3>
+        <p class="mt-2 text-sm text-charcoal/75" data-i18n="data.sources.body">
+          SUNCASA Performance Management Framework and Environmental Management Program, complemented by selected public city and partner data sets where readily available.
+        </p>
+      </div>
+      <div class="rounded-md border border-rule bg-paper p-5">
+        <h3 class="headline text-lg text-charcoal" data-i18n="data.limitations.title">Limitations</h3>
+        <p class="mt-2 text-sm text-charcoal/75" data-i18n="data.limitations.body">
+          Sample values are illustrative pending the SUNCASA data catalogue. No real time feeds, no predictive modelling, and no new data collection are part of this MVP.
+        </p>
+      </div>
+      <div class="rounded-md border border-rule bg-paper p-5">
+        <h3 class="headline text-lg text-charcoal" data-i18n="data.update.title">Update approach</h3>
+        <p class="mt-2 text-sm text-charcoal/75" data-i18n="data.update.body">
+          Data is prepared in CSV or Excel and ingested into the dashboard at build time, keeping data, presentation, and content fully separated for easy maintenance.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

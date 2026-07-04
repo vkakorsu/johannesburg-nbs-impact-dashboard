@@ -1,0 +1,73 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import IndicatorCard from "../components/IndicatorCard.astro";
+import TrendChart from "../components/TrendChart.tsx";
+import CoDesignTag from "../components/CoDesignTag.astro";
+import { t } from "../i18n";
+import { pillars, indicatorsByPillar, getPillar, timeseries } from "../data";
+
+export function getStaticPaths() {
+  return pillars.map((p) => ({ params: { pillar: p.slug } }));
+}
+
+const { pillar } = Astro.params;
+const meta = getPillar(pillar as any);
+const inds = indicatorsByPillar(meta.id);
+const core = inds.filter((i) => i.status === "core");
+const proposed = inds.filter((i) => i.status === "proposed");
+
+// Pick a representative indicator that has a time series for the theme chart.
+const charted = inds.find((i) => timeseries[i.id]);
+const chartSeries = charted ? timeseries[charted.id] : [];
+---
+
+<BaseLayout active={meta.id} title={meta.title.en} description={meta.summary.en}>
+  <section class="border-b border-rule" style={`background:linear-gradient(180deg, ${meta.accent}14, transparent)`}>
+    <div class="mx-auto max-w-page px-5 py-14">
+      <a href="/" class="text-sm text-emerald hover:underline" data-i18n="common.backHome">Back to overview</a>
+      <div class="mt-4 flex items-center gap-3">
+        <span class="h-2 w-16 rounded-full" style={`background:${meta.accent}`}></span>
+        <span class="eyebrow text-charcoal/50" data-i18n={meta.labelKey}>{t(meta.labelKey)}</span>
+      </div>
+      <h1 class="headline mt-3 text-display text-charcoal" data-i18n={`pillar.${meta.id}.title`}>{meta.title.en}</h1>
+      <p class="mt-4 max-w-prose text-lg text-charcoal/80" data-i18n={`pillar.${meta.id}.summary`}>{meta.summary.en}</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-page px-5 py-14">
+    <!-- Theme trend chart -->
+    {charted && (
+      <div class="mb-12 rounded-md border border-rule bg-paper p-6">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h2 class="headline text-xl text-charcoal" data-i18n="pillar.chart.title">Progress over time</h2>
+          <span class="eyebrow text-charcoal/45" data-i18n={`ind.${charted.id}.name`}>{charted.name.en}</span>
+        </div>
+        <div class="mt-4">
+          <TrendChart client:visible data={chartSeries} color={meta.accent} unit={charted.unit} label={charted.name.en} />
+        </div>
+      </div>
+    )}
+
+    <!-- Core indicators -->
+    <h2 class="headline text-2xl text-charcoal" data-i18n="common.viewIndicators">View indicators</h2>
+    <div class="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {core.map((ind) => <IndicatorCard indicator={ind} />)}
+    </div>
+
+    <!-- Proposed indicators, clearly flagged as co-design options -->
+    {proposed.length > 0 && (
+      <div class="mt-14">
+        <div class="flex flex-wrap items-center gap-3">
+          <h2 class="headline text-2xl text-charcoal" data-i18n="pillar.proposed.title">Proposed additions</h2>
+          <CoDesignTag variant="proposed" />
+        </div>
+        <p class="mt-2 max-w-prose text-charcoal/70" data-i18n="pillar.proposed.body">
+          These indicators are options for discussion during the Inception Phase. Their inclusion depends on data availability and stakeholder priorities.
+        </p>
+        <div class="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {proposed.map((ind) => <IndicatorCard indicator={ind} />)}
+        </div>
+      </div>
+    )}
+  </section>
+</BaseLayout>

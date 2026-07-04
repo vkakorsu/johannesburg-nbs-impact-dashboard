@@ -1,0 +1,26 @@
+---
+import { t } from "../i18n";
+
+interface Props {
+  variant?: "proposed" | "feedback";
+  class?: string;
+}
+const { variant = "proposed", class: className = "" } = Astro.props;
+
+const key = variant === "proposed" ? "indicator.proposed" : "codesign.tag";
+---
+
+<span
+  class:list={[
+    "inline-flex items-center gap-1.5 rounded-full border border-dashed px-2.5 py-0.5 text-xs font-medium",
+    variant === "proposed"
+      ? "border-clay/50 bg-clay/5 text-clay"
+      : "border-emerald-soft/50 bg-emerald/5 text-emerald-mid",
+    className,
+  ]}
+>
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <path d="M12 5v14M5 12h14" stroke-linecap="round" />
+  </svg>
+  <span data-i18n={key}>{t(key)}</span>
+</span>

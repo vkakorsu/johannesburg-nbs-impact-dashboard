@@ -1,0 +1,52 @@
+---
+import { t } from "../i18n";
+import type { Indicator } from "../data";
+import TrendPill from "./TrendPill.astro";
+import CoDesignTag from "./CoDesignTag.astro";
+
+interface Props {
+  indicator: Indicator;
+}
+const { indicator } = Astro.props;
+const value = indicator.latestValue;
+const display = value === null ? "n/a" : Intl.NumberFormat("en").format(value);
+const goodDirection = indicator.id === "flood_extent" || indicator.id === "streamflow" ? "down" : "up";
+---
+
+<article class="flex flex-col rounded-md border border-rule bg-paper p-6">
+  <div class="flex flex-wrap items-start justify-between gap-2">
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="eyebrow rounded-sm bg-charcoal/5 px-1.5 py-0.5 text-charcoal/60">{indicator.framework}</span>
+      {indicator.status === "proposed" && <CoDesignTag variant="proposed" />}
+    </div>
+    <TrendPill trend={indicator.trend} goodDirection={goodDirection} />
+  </div>
+
+  <h3 class="headline mt-3 text-lg text-charcoal" data-i18n={`ind.${indicator.id}.name`}>{indicator.name.en}</h3>
+
+  <div class="mt-4 flex items-baseline gap-2 border-b border-rule pb-4">
+    <span class="headline tnum text-4xl text-emerald">{display}</span>
+    <span class="text-sm text-charcoal/60">{indicator.unit}</span>
+  </div>
+
+  <div class="mt-4 space-y-3 text-sm">
+    <div>
+      <p class="eyebrow text-charcoal/45" data-i18n="indicator.why">Why this matters</p>
+      <p class="mt-1 text-charcoal/85" data-i18n={`ind.${indicator.id}.why`}>{indicator.why.en}</p>
+    </div>
+    <dl class="grid grid-cols-2 gap-x-4 gap-y-2 pt-1">
+      <div>
+        <dt class="eyebrow text-charcoal/45" data-i18n="indicator.source">Source</dt>
+        <dd class="mt-0.5 text-charcoal/80" data-i18n={`ind.${indicator.id}.source`}>{indicator.source.en}</dd>
+      </div>
+      <div>
+        <dt class="eyebrow text-charcoal/45" data-i18n="indicator.frequency">Update frequency</dt>
+        <dd class="mt-0.5 text-charcoal/80" data-i18n={`ind.${indicator.id}.frequency`}>{indicator.frequency.en}</dd>
+      </div>
+    </dl>
+    <p class="rounded-sm bg-paper-warm px-3 py-2 text-xs text-charcoal/65">
+      <span class="font-semibold" data-i18n="indicator.caveat">Caveats and limitations</span>:
+      <span data-i18n={`ind.${indicator.id}.caveat`}>{indicator.caveat.en}</span>
+    </p>
+  </div>
+</article>

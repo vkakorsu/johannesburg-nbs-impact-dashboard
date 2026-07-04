@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout active="methodology" title="Methodology" description="How the SUNCASA Jukskei MVP dashboard is built, scoped, and scaled.">
+  <section class="border-b border-rule bg-paper-warm/40">
+    <div class="mx-auto max-w-page px-5 py-14">
+      <p class="eyebrow text-emerald" data-i18n="hero.eyebrow">SUNCASA Johannesburg</p>
+      <h1 class="headline mt-3 text-4xl text-charcoal" data-i18n="meth.title">Methodology and approach</h1>
+      <p class="mt-4 max-w-prose text-lg text-charcoal/80" data-i18n="meth.lede">
+        This page summarises how the MVP is built and how it is designed to scale into a city wide platform without a full rebuild.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto grid max-w-page gap-10 px-5 py-14 md:grid-cols-[0.9fr_1.1fr]">
+    <div>
+      <h2 class="headline text-2xl text-charcoal" data-i18n="meth.principles.title">Design principles</h2>
+      <ul class="mt-4 space-y-3 text-charcoal/80">
+        <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"></span><span data-i18n="meth.principles.1">Communication first, not an internal analytics tool.</span></li>
+        <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"></span><span data-i18n="meth.principles.2">Indicator driven and narrative supported, inspired by MyPeg.</span></li>
+        <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"></span><span data-i18n="meth.principles.3">Plain language, high contrast, and WCAG aware.</span></li>
+        <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"></span><span data-i18n="meth.principles.4">Mobile and low bandwidth friendly by default.</span></li>
+        <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald"></span><span data-i18n="meth.principles.5">Data, presentation, and content kept separate.</span></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="headline text-2xl text-charcoal" data-i18n="meth.roadmap.title">Scalability roadmap</h2>
+      <ol class="mt-4 space-y-5">
+        <li class="rounded-md border border-rule bg-paper p-5">
+          <span class="eyebrow text-emerald" data-i18n="meth.phase1.label">Phase 1</span>
+          <p class="headline mt-1 text-lg text-charcoal" data-i18n="meth.phase1.title">SUNCASA MVP</p>
+          <p class="mt-1 text-sm text-charcoal/75" data-i18n="meth.phase1.body">Jukskei intervention areas, curated indicators, static and lightly interactive visuals, EN and ZU content structure.</p>
+        </li>
+        <li class="rounded-md border border-rule bg-paper p-5">
+          <span class="eyebrow text-clay" data-i18n="meth.phase2.label">Phase 2</span>
+          <p class="headline mt-1 text-lg text-charcoal" data-i18n="meth.phase2.title">Enhanced SUNCASA</p>
+          <p class="mt-1 text-sm text-charcoal/75" data-i18n="meth.phase2.body">More indicators, richer stories, optional filters, and Power BI or Azure data connections where the City wants them.</p>
+        </li>
+        <li class="rounded-md border border-rule bg-paper p-5">
+          <span class="eyebrow text-charcoal/60" data-i18n="meth.phase3.label">Phase 3</span>
+          <p class="headline mt-1 text-lg text-charcoal" data-i18n="meth.phase3.title">City wide NbS platform</p>
+          <p class="mt-1 text-sm text-charcoal/75" data-i18n="meth.phase3.body">Expanded indicator catalogue across Johannesburg, automated translation, comparisons, and a strategic fundraising function.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-page px-5 pb-16">
+    <div class="rounded-md border border-rule bg-charcoal p-8 text-paper">
+      <h2 class="headline text-2xl" data-i18n="meth.oos.title">Explicitly out of scope for the MVP</h2>
+      <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 text-sm text-paper/85">
+        <p class="rounded-sm bg-paper/10 px-4 py-3" data-i18n="meth.oos.1">No real time data feeds</p>
+        <p class="rounded-sm bg-paper/10 px-4 py-3" data-i18n="meth.oos.2">No advanced analytics or machine learning</p>
+        <p class="rounded-sm bg-paper/10 px-4 py-3" data-i18n="meth.oos.3">No custom user authentication</p>
+        <p class="rounded-sm bg-paper/10 px-4 py-3" data-i18n="meth.oos.4">No city wide coverage in this phase</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,161 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import StatBlock from "../components/StatBlock.astro";
+import CoDesignTag from "../components/CoDesignTag.astro";
+import MapView from "../components/MapView.tsx";
+import StoryCard from "../components/StoryCard.astro";
+import { t } from "../i18n";
+import { pillars, headlineIndicators, indicatorsByPillar, sites } from "../data";
+
+const headline = headlineIndicators();
+const stories = [
+  { title: "Turning trash into treasure", excerpt: "Waste pulled from the Jukskei is reworked into public art by local artists in Alexandra, turning cleanup into pride.", place: "Alexandra", accent: "#3B7EA1", titleKey: "story.1.title", excerptKey: "story.1.excerpt" },
+  { title: "The Water Warriors", excerpt: "A community crew clears debris and restores the banks, earning income while protecting homes from floods.", place: "Jukskei corridor", accent: "#B4643C", titleKey: "story.2.title", excerptKey: "story.2.excerpt" },
+  { title: "Shade for every street", excerpt: "Trees planted near low income households bring cooling and greenery to blocks that had little of either.", place: "Inner city", accent: "#2F6B52", titleKey: "story.3.title", excerptKey: "story.3.excerpt" },
+  { title: "Litter traps become river art", excerpt: "Handwoven traps catch waste before it floods Alexandra, while artist Hannelie Coetzee and the Water Warriors turn the debris into sculpture.", place: "Alexandra", accent: "#0B3D2E", titleKey: "story.4.title", excerptKey: "story.4.excerpt" },
+];
+---
+
+<BaseLayout active="home">
+  <!-- Hero -->
+  <section class="border-b border-rule bg-gradient-to-b from-paper to-paper-warm/40">
+    <div class="mx-auto grid max-w-page gap-10 px-5 py-10 md:grid-cols-[1.15fr_0.85fr] md:items-center md:py-16">
+      <div>
+        <p class="eyebrow text-emerald" data-i18n="hero.eyebrow">SUNCASA Johannesburg</p>
+        <h1 class="headline mt-3 text-display text-charcoal" data-i18n="hero.title">
+          Restoring the Jukskei, one intervention at a time
+        </h1>
+        <p class="mt-5 max-w-prose text-lg text-charcoal/80" data-i18n="hero.lede">
+          This dashboard shows what nature based solutions are being delivered along the Upper Jukskei River catchment in Alexandra and how they reduce flood risk, cool neighbourhoods, improve the environment, and create local opportunity.
+        </p>
+        <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a href="#themes" class="rounded-sm bg-emerald px-5 py-3 text-center text-sm font-semibold text-paper transition-colors hover:bg-emerald-mid" data-i18n="hero.cta.explore">
+            Explore the four themes
+          </a>
+          <a href="#map" class="rounded-sm border border-emerald/30 px-5 py-3 text-center text-sm font-semibold text-emerald transition-colors hover:bg-emerald/5" data-i18n="hero.cta.map">
+            See the intervention map
+          </a>
+        </div>
+        <p class="mt-6 text-sm text-charcoal/55" data-i18n="hero.note">
+          Minimum viable product. Prepared for the City of Johannesburg, IISD, and the SUNCASA partnership.
+        </p>
+      </div>
+
+      <!-- Five headline indicators, no interaction required to read the core message -->
+      <div class="grid grid-cols-2 gap-3">
+        {headline.map((ind, i) => (
+          <div class:list={[i === headline.length - 1 && headline.length % 2 === 1 ? "col-span-2" : ""]}>
+            <StatBlock indicator={ind} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Programme at a glance: real SUNCASA programme wide targets -->
+  <section class="border-b border-rule bg-charcoal text-paper">
+    <div class="mx-auto max-w-page px-5 py-12">
+      <h2 class="headline text-2xl" data-i18n="context.title">The SUNCASA programme at a glance</h2>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+        <div>
+          <span class="headline tnum block text-4xl text-clay-soft">469</span>
+          <span class="mt-1 block text-sm text-paper/75" data-i18n="context.stat1">hectares of riparian restoration</span>
+        </div>
+        <div>
+          <span class="headline tnum block text-4xl text-clay-soft">46,000</span>
+          <span class="mt-1 block text-sm text-paper/75" data-i18n="context.stat2">urban trees planted</span>
+        </div>
+        <div>
+          <span class="headline tnum block text-4xl text-clay-soft">1.045M</span>
+          <span class="mt-1 block text-sm text-paper/75" data-i18n="context.stat3">residents made more resilient</span>
+        </div>
+        <div>
+          <span class="headline tnum block text-4xl text-clay-soft">50%+</span>
+          <span class="mt-1 block text-sm text-paper/75" data-i18n="context.stat4">of beneficiaries are women</span>
+        </div>
+        <div>
+          <span class="headline tnum block text-4xl text-clay-soft">$3.06</span>
+          <span class="mt-1 block text-sm text-paper/75" data-i18n="context.stat5">return per $1 invested (SAVi 2026)</span>
+        </div>
+      </div>
+      <p class="mt-8 max-w-prose text-sm text-paper/55" data-i18n="context.note">
+        Programme wide targets for the Upper Jukskei catchment. Site level values elsewhere on this dashboard are illustrative and await the SUNCASA data catalogue.
+      </p>
+    </div>
+  </section>
+
+  <!-- Four pillar grid -->
+  <section id="themes" class="mx-auto max-w-page px-5 py-16">
+    <div class="max-w-prose">
+      <h2 class="headline text-3xl text-charcoal" data-i18n="pillars.title">Four themes of impact</h2>
+      <p class="mt-3 text-charcoal/75" data-i18n="pillars.subtitle">
+        Each theme carries a small set of clear indicators drawn from the SUNCASA Performance Management Framework and Environmental Management Program.
+      </p>
+    </div>
+
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {pillars.map((p) => {
+        const inds = indicatorsByPillar(p.id);
+        const proposed = inds.filter((i) => i.status === "proposed").length;
+        return (
+          <a
+            href={`/${p.slug}`}
+            class="group flex flex-col rounded-md border border-rule bg-paper p-6 transition-transform hover:-translate-y-0.5"
+          >
+            <span class="h-1.5 w-12 rounded-full" style={`background:${p.accent}`}></span>
+            <span class="headline mt-4 text-xl text-charcoal" data-i18n={`pillar.${p.id}.title`}>{p.title.en}</span>
+            <span class="mt-2 flex-1 text-sm text-charcoal/75" data-i18n={`pillar.${p.id}.summary`}>{p.summary.en}</span>
+            <span class="mt-5 flex items-center justify-between text-sm">
+              <span class="font-medium text-emerald" data-i18n="pillar.readmore">Open theme</span>
+              <span class="text-charcoal/50">{inds.length} indicators{proposed > 0 ? ` , ${proposed} proposed` : ""}</span>
+            </span>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Co-design invitation -->
+  <section class="border-y border-rule bg-emerald text-paper">
+    <div class="mx-auto grid max-w-page gap-8 px-5 py-14 md:grid-cols-[1fr_1.1fr] md:items-center">
+      <div>
+        <CoDesignTag variant="feedback" class="!border-paper/40 !bg-paper/10 !text-paper" />
+        <h2 class="headline mt-4 text-3xl" data-i18n="codesign.title">Shaped with you, not for you</h2>
+      </div>
+      <p class="text-lg text-paper/85" data-i18n="codesign.body">
+        This prototype is a starting point for the Inception Phase. Indicators marked as proposed are options for discussion. Stakeholder feedback from the City of Johannesburg, IISD, and community partners will decide the final set.
+      </p>
+    </div>
+  </section>
+
+  <!-- Map -->
+  <section id="map" class="mx-auto max-w-page px-5 py-16">
+    <div class="max-w-prose">
+      <h2 class="headline text-3xl text-charcoal" data-i18n="map.title">Where the work is happening</h2>
+      <p class="mt-3 text-charcoal/75" data-i18n="map.caption">
+        Illustrative intervention sites along the Jukskei corridor in Alexandra. Exact geometries will be confirmed from the SUNCASA data catalogue.
+      </p>
+    </div>
+    <div class="mt-8">
+      <MapView client:only="react" geojson={sites} />
+      <noscript>
+        <div class="rounded-md border border-rule bg-paper p-6 text-charcoal/80" data-i18n="map.fallback">
+          Interactive map requires JavaScript. Intervention sites along the Jukskei corridor in Alexandra include cleared reaches, rehabilitated riverbanks, tree planting zones, and riparian restoration areas, all confirmed from the SUNCASA data catalogue.
+        </div>
+      </noscript>
+    </div>
+  </section>
+
+  <!-- Stories -->
+  <section class="mx-auto max-w-page px-5 pb-8">
+    <div class="max-w-prose">
+      <h2 class="headline text-3xl text-charcoal" data-i18n="stories.title">Stories from the river</h2>
+      <p class="mt-3 text-charcoal/75" data-i18n="stories.subtitle">
+        Short, clearly labelled community stories that sit alongside the numbers.
+      </p>
+    </div>
+    <div class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+      {stories.map((s) => <StoryCard title={s.title} excerpt={s.excerpt} place={s.place} accent={s.accent} titleKey={s.titleKey} excerptKey={s.excerptKey} />)}
+    </div>
+  </section>
+</BaseLayout>

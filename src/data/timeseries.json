@@ -1,0 +1,110 @@
+{
+  "debris_removed": [
+    {
+      "period": "2024 Q3",
+      "value": 90
+    },
+    {
+      "period": "2024 Q4",
+      "value": 168
+    },
+    {
+      "period": "2025 Q1",
+      "value": 286
+    },
+    {
+      "period": "2025 Q2",
+      "value": 412
+    }
+  ],
+  "trees_planted": [
+    {
+      "period": "2024 Q3",
+      "value": 1200
+    },
+    {
+      "period": "2024 Q4",
+      "value": 3100
+    },
+    {
+      "period": "2025 Q1",
+      "value": 5400
+    },
+    {
+      "period": "2025 Q2",
+      "value": 7450
+    }
+  ],
+  "riparian_restored": [
+    {
+      "period": "2024 Q3",
+      "value": 4.5
+    },
+    {
+      "period": "2024 Q4",
+      "value": 10.1
+    },
+    {
+      "period": "2025 Q1",
+      "value": 16.8
+    },
+    {
+      "period": "2025 Q2",
+      "value": 22.3
+    }
+  ],
+  "jobs_created": [
+    {
+      "period": "2024 Q3",
+      "value": 60
+    },
+    {
+      "period": "2024 Q4",
+      "value": 118
+    },
+    {
+      "period": "2025 Q1",
+      "value": 190
+    },
+    {
+      "period": "2025 Q2",
+      "value": 236
+    }
+  ],
+  "women_participants": [
+    {
+      "period": "2024 Q3",
+      "value": 32
+    },
+    {
+      "period": "2024 Q4",
+      "value": 71
+    },
+    {
+      "period": "2025 Q1",
+      "value": 110
+    },
+    {
+      "period": "2025 Q2",
+      "value": 148
+    }
+  ],
+  "water_quality": [
+    {
+      "period": "2024 Q3",
+      "value": 48
+    },
+    {
+      "period": "2024 Q4",
+      "value": 53
+    },
+    {
+      "period": "2025 Q1",
+      "value": 58
+    },
+    {
+      "period": "2025 Q2",
+      "value": 62
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+---
+import LangToggle from "./LangToggle.tsx";
+import MobileMenu from "./MobileMenu.tsx";
+import { t } from "../i18n";
+import { pillars } from "../data";
+
+interface Props {
+  active?: string;
+}
+const { active } = Astro.props;
+
+const nav = [
+  { href: "/", key: "nav.home", id: "home" },
+  ...pillars.map((p) => ({ href: `/${p.slug}`, key: p.labelKey, id: p.id })),
+  { href: "/about-data", key: "nav.data", id: "data" },
+];
+
+const mobileItems = nav.map((item) => ({
+  href: item.href,
+  label: t(item.key),
+  i18nKey: item.key,
+  active: active === item.id,
+}));
+---
+
+<header class="border-b border-rule bg-paper/95 backdrop-blur supports-[backdrop-filter]:bg-paper/80 sticky top-0 z-40">
+  <div class="mx-auto flex max-w-page items-center justify-between gap-4 px-5 py-3">
+    <a href="/" class="group flex items-center gap-3" aria-label={t("site.title")}>
+      <span class="hidden h-9 w-9 place-items-center rounded-sm bg-emerald text-paper lg:grid" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 18c3 0 3-2 6-2s3 2 6 2 3-2 4-2" />
+          <path d="M4 13c3 0 3-2 6-2s3 2 6 2 3-2 4-2" />
+          <path d="M12 3c2.5 2 3 4 3 6H9c0-2 .5-4 3-6Z" />
+        </svg>
+      </span>
+      <span class="leading-tight">
+        <span class="block eyebrow text-emerald" data-i18n="hero.eyebrow">SUNCASA Johannesburg</span>
+        <span class="headline block text-base text-charcoal" data-i18n="site.title">Johannesburg Nature-based Solutions Impact Dashboard</span>
+      </span>
+    </a>
+
+    <div class="flex items-center gap-3">
+      <nav aria-label="Primary" class="hidden lg:block">
+        <ul class="flex items-center gap-7 text-sm">
+          {nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={active === item.id ? "page" : undefined}
+                class:list={[
+                  "hover:text-emerald transition-colors",
+                  active === item.id ? "text-emerald font-semibold" : "text-charcoal/75",
+                ]}
+                data-i18n={item.key}
+              >
+                {t(item.key)}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <LangToggle client:load />
+      <MobileMenu client:load items={mobileItems} />
+    </div>
+  </div>
+</header>

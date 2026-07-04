@@ -1,0 +1,25 @@
+indicator_id,period,value
+debris_removed,2024 Q3,90
+debris_removed,2024 Q4,168
+debris_removed,2025 Q1,286
+debris_removed,2025 Q2,412
+trees_planted,2024 Q3,1200
+trees_planted,2024 Q4,3100
+trees_planted,2025 Q1,5400
+trees_planted,2025 Q2,7450
+riparian_restored,2024 Q3,4.5
+riparian_restored,2024 Q4,10.1
+riparian_restored,2025 Q1,16.8
+riparian_restored,2025 Q2,22.3
+jobs_created,2024 Q3,60
+jobs_created,2024 Q4,118
+jobs_created,2025 Q1,190
+jobs_created,2025 Q2,236
+women_participants,2024 Q3,32
+women_participants,2024 Q4,71
+women_participants,2025 Q1,110
+women_participants,2025 Q2,148
+water_quality,2024 Q3,48
+water_quality,2024 Q4,53
+water_quality,2025 Q1,58
+water_quality,2025 Q2,62
