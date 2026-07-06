@@ -7,7 +7,7 @@ import tailwind from "@astrojs/tailwind";
 // No server runtime is required, which removes vendor lock-in.
 export default defineConfig({
   output: "static",
-  site: "https://suncasa-jukskei.example.org",
+  site: "https://johannesburg-nbs-impact-dashboard.vercel.app",
   integrations: [
     react(),
     tailwind({ applyBaseStyles: false }),
