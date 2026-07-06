@@ -155,39 +155,46 @@ export default function MobileMenu({ items }: Props) {
                   </li>
                 ))}
               </ul>
-            </nav>
 
-            <div className="border-t border-rule px-5 py-4">
-              <div
-                className="inline-flex items-center rounded-full border border-paper-warm bg-paper/60 p-0.5 text-sm font-medium"
-                role="group"
-                aria-label="Language"
-              >
-                <button
-                  type="button"
-                  data-lang-btn="en"
-                  aria-pressed={lang === "en"}
-                  onClick={() => choose("en")}
-                  className={`rounded-full px-3 py-1 transition-colors ${
-                    lang === "en" ? "bg-emerald text-paper" : "text-charcoal/70 hover:text-charcoal"
-                  }`}
+              {/* Language toggle — below nav items with spacing */}
+              <div className="mt-6 border-t border-rule pt-5">
+                <p className="mb-2 px-4 text-xs font-medium uppercase tracking-wider text-charcoal/50">Language</p>
+                <div
+                  className="flex gap-2 px-4"
+                  role="group"
+                  aria-label="Language"
                 >
-                  EN
-                </button>
-                <span aria-hidden="true" className="px-0.5 text-charcoal/30">|</span>
-                <button
-                  type="button"
-                  data-lang-btn="zu"
-                  aria-pressed={lang === "zu"}
-                  onClick={() => choose("zu")}
-                  className={`rounded-full px-3 py-1 transition-colors ${
-                    lang === "zu" ? "bg-emerald text-paper" : "text-charcoal/70 hover:text-charcoal"
-                  }`}
-                >
-                  ZU
-                </button>
+                  <button
+                    type="button"
+                    data-lang-btn="en"
+                    aria-pressed={lang === "en"}
+                    onClick={() => choose("en")}
+                    className={`flex-1 rounded-md px-4 py-3 text-sm font-medium transition-colors ${
+                      lang === "en"
+                        ? "bg-emerald text-paper"
+                        : "border border-rule text-charcoal/70 hover:bg-paper-warm"
+                    }`}
+                    style={{ minHeight: "44px" }}
+                  >
+                    English
+                  </button>
+                  <button
+                    type="button"
+                    data-lang-btn="zu"
+                    aria-pressed={lang === "zu"}
+                    onClick={() => choose("zu")}
+                    className={`flex-1 rounded-md px-4 py-3 text-sm font-medium transition-colors ${
+                      lang === "zu"
+                        ? "bg-emerald text-paper"
+                        : "border border-rule text-charcoal/70 hover:bg-paper-warm"
+                    }`}
+                    style={{ minHeight: "44px" }}
+                  >
+                    isiZulu
+                  </button>
+                </div>
               </div>
-            </div>
+            </nav>
           </div>
         </div>,
         document.body
