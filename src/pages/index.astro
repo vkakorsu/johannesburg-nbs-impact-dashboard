@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import StatBlock from "../components/StatBlock.astro";
 import CoDesignTag from "../components/CoDesignTag.astro";
@@ -6,6 +7,7 @@ import MapView from "../components/MapView.tsx";
 import StoryCard from "../components/StoryCard.astro";
 import { t } from "../i18n";
 import { pillars, headlineIndicators, indicatorsByPillar, sites } from "../data";
+import heroImage from "../assets/suncasa-joburg-crab-sculpture.jpg";
 
 const headline = headlineIndicators();
 const stories = [
@@ -19,35 +21,54 @@ const stories = [
 <BaseLayout active="home">
   <!-- Hero -->
   <section class="border-b border-rule bg-gradient-to-b from-paper to-paper-warm/40">
-    <div class="mx-auto grid max-w-page gap-10 px-5 py-10 md:grid-cols-[1.15fr_0.85fr] md:items-center md:py-16">
-      <div>
-        <p class="eyebrow text-emerald" data-i18n="hero.eyebrow">SUNCASA Johannesburg</p>
-        <h1 class="headline mt-3 text-display text-charcoal" data-i18n="hero.title">
-          Restoring the Jukskei, one intervention at a time
-        </h1>
-        <p class="mt-5 max-w-prose text-lg text-charcoal/80" data-i18n="hero.lede">
-          This dashboard shows what nature based solutions are being delivered along the Upper Jukskei River catchment in Alexandra and how they reduce flood risk, cool neighbourhoods, improve the environment, and create local opportunity.
-        </p>
-        <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <a href="#themes" class="rounded-sm bg-emerald px-5 py-3 text-center text-sm font-semibold text-paper transition-colors hover:bg-emerald-mid" data-i18n="hero.cta.explore">
-            Explore the four themes
-          </a>
-          <a href="#map" class="rounded-sm border border-emerald/30 px-5 py-3 text-center text-sm font-semibold text-emerald transition-colors hover:bg-emerald/5" data-i18n="hero.cta.map">
-            See the intervention map
-          </a>
+    <div class="mx-auto max-w-page px-5 py-10 md:py-16">
+      <div class="grid gap-10 md:grid-cols-[1.15fr_0.85fr] md:items-center">
+        <div>
+          <p class="eyebrow text-emerald" data-i18n="hero.eyebrow">SUNCASA Johannesburg</p>
+          <h1 class="headline mt-3 text-display text-charcoal" data-i18n="hero.title">
+            Restoring the Jukskei, one intervention at a time
+          </h1>
+          <p class="mt-5 max-w-prose text-lg text-charcoal/80" data-i18n="hero.lede">
+            This dashboard shows what nature based solutions are being delivered along the Upper Jukskei River catchment in Alexandra and how they reduce flood risk, cool neighbourhoods, improve the environment, and create local opportunity.
+          </p>
+          <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <a href="#themes" class="rounded-sm bg-emerald px-5 py-3 text-center text-sm font-semibold text-paper transition-colors hover:bg-emerald-mid" data-i18n="hero.cta.explore">
+              Explore the four themes
+            </a>
+            <a href="#map" class="rounded-sm border border-emerald/30 px-5 py-3 text-center text-sm font-semibold text-emerald transition-colors hover:bg-emerald/5" data-i18n="hero.cta.map">
+              See the intervention map
+            </a>
+          </div>
+          <p class="mt-6 text-sm text-charcoal/55" data-i18n="hero.note">
+            Minimum viable product. Prepared for the City of Johannesburg, IISD, and the SUNCASA partnership.
+          </p>
         </div>
-        <p class="mt-6 text-sm text-charcoal/55" data-i18n="hero.note">
-          Minimum viable product. Prepared for the City of Johannesburg, IISD, and the SUNCASA partnership.
-        </p>
+
+        <!-- Five headline indicators, no interaction required to read the core message -->
+        <div class="grid grid-cols-2 gap-3">
+          {headline.map((ind, i) => (
+            <div class:list={[i === headline.length - 1 && headline.length % 2 === 1 ? "col-span-2" : ""]}>
+              <StatBlock indicator={ind} />
+            </div>
+          ))}
+        </div>
       </div>
 
-      <!-- Five headline indicators, no interaction required to read the core message -->
-      <div class="grid grid-cols-2 gap-3">
-        {headline.map((ind, i) => (
-          <div class:list={[i === headline.length - 1 && headline.length % 2 === 1 ? "col-span-2" : ""]}>
-            <StatBlock indicator={ind} />
-          </div>
-        ))}
+      <!-- Hero image — Jukskei River corridor, auto-optimized to WebP at build time -->
+      <div class="mt-10 overflow-hidden rounded-lg">
+        <Image
+          src={heroImage}
+          alt="Nhlakanipho the Crab sculpture on the Jukskei River, made from illegal construction waste by artist Sipho Gwala in collaboration with Hannelie Coetzee — crabs clean riverbeds but face threats from pollution"
+          width={1200}
+          height={400}
+          format="webp"
+          quality={75}
+          loading="eager"
+          decoding="async"
+          class="h-auto w-full object-cover"
+          style="max-height: 380px;"
+        />
+        <p class="mt-1.5 text-xs text-charcoal/45"><em>Nhlakanipho the Crab: Nature's Cleaner</em> — Artist: Sipho Gwala, in collaboration with Hannelie Coetzee. Made from illegal construction waste. Photo: IISD / SUNCASA Johannesburg.</p>
       </div>
     </div>
   </section>

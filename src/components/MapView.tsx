@@ -19,6 +19,13 @@ const pillarColors: Record<string, string> = {
   socio: "#8A6D3B",
 };
 
+const pillarLabels: Record<string, string> = {
+  flood: "Flood management",
+  heat: "Heat management",
+  environment: "Environmental quality",
+  socio: "Socio-economic",
+};
+
 // Leaflet with OpenStreetMap tiles. No API token is required, which avoids
 // vendor lock in. Interactivity is intentionally light, in line with a
 // communication focused MVP.
@@ -27,8 +34,12 @@ export default function MapView({ geojson }: Props) {
   const points = geojson.features.filter((f) => f.geometry.type === "Point");
   const lines = geojson.features.filter((f) => f.geometry.type === "LineString");
 
+  // Determine which pillars are actually present in the data
+  const activePillars = [...new Set(points.map((f) => f.properties.pillar))];
+  const hasLines = lines.length > 0;
+
   return (
-    <div className="overflow-hidden rounded-md border border-rule" style={{ height: 460 }}>
+    <div className="relative overflow-hidden rounded-md border border-rule" style={{ height: 460 }}>
       <MapContainer
         center={center}
         zoom={14}
@@ -75,6 +86,33 @@ export default function MapView({ geojson }: Props) {
           );
         })}
       </MapContainer>
+
+      {/* Map legend */}
+      <div
+        className="absolute bottom-3 left-3 z-[1000] rounded-md border border-rule bg-paper/95 px-3 py-2.5 text-xs shadow-sm backdrop-blur"
+        style={{ pointerEvents: "auto" }}
+      >
+        <p className="mb-1.5 font-semibold text-charcoal/70" style={{ fontSize: "0.65rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+          Legend
+        </p>
+        <ul className="flex flex-col gap-1">
+          {activePillars.map((pillar) => (
+            <li key={pillar} className="flex items-center gap-2">
+              <span
+                className="inline-block h-2.5 w-2.5 shrink-0 rounded-full"
+                style={{ backgroundColor: pillarColors[pillar] ?? "#3B7EA1" }}
+              />
+              <span className="text-charcoal/80">{pillarLabels[pillar] ?? pillar}</span>
+            </li>
+          ))}
+          {hasLines && (
+            <li className="flex items-center gap-2">
+              <span className="inline-block h-0.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: "#0B3D2E", borderTop: "2px dashed #0B3D2E" }} />
+              <span className="text-charcoal/80">River corridor</span>
+            </li>
+          )}
+        </ul>
+      </div>
     </div>
   );
 }
