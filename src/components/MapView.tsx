@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, CircleMarker, Polyline, Popup, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -19,12 +20,59 @@ const pillarColors: Record<string, string> = {
   socio: "#8A6D3B",
 };
 
-const pillarLabels: Record<string, string> = {
+// English fallbacks used before the i18n runtime is ready and on no-JS.
+const pillarLabelsFallback: Record<string, string> = {
   flood: "Flood management",
   heat: "Heat management",
   environment: "Environmental quality",
   socio: "Socio-economic",
 };
+
+// Legend labels read from the shared i18n dictionaries and swap live with the
+// language toggle, so the map stays consistent with the rest of the page.
+const pillarLabelKeys: Record<string, string> = {
+  flood: "nav.flood",
+  heat: "nav.heat",
+  environment: "nav.environment",
+  socio: "nav.socio",
+};
+
+type Dict = Record<string, string>;
+
+function useLangLabels() {
+  const [lang, setLang] = useState<string>(
+    typeof window !== "undefined" && window.suncasaGetLang ? window.suncasaGetLang() : "en",
+  );
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<{ lang: string }>).detail;
+      if (detail?.lang) setLang(detail.lang);
+    };
+    window.addEventListener("suncasa:langchange", handler);
+    if (window.suncasaGetLang) setLang(window.suncasaGetLang());
+    return () => window.removeEventListener("suncasa:langchange", handler);
+  }, []);
+
+  const dicts = (typeof window !== "undefined" ? window.__SUNCASA_I18N__ : undefined) ?? {};
+  const dict: Dict = (dicts[lang] as Dict) ?? {};
+  const fallback: Dict = (dicts.en as Dict) ?? {};
+  const tr = (key: string, def: string) => dict[key] ?? fallback[key] ?? def;
+
+  return {
+    legendTitle: tr("map.legend", "Legend"),
+    riverCorridor: tr("map.riverCorridor", "River corridor"),
+    pillarLabel: (pillar: string) =>
+      tr(pillarLabelKeys[pillar] ?? "", pillarLabelsFallback[pillar] ?? pillar),
+  };
+}
+
+declare global {
+  interface Window {
+    __SUNCASA_I18N__?: Record<string, Dict>;
+    suncasaGetLang?: () => string;
+  }
+}
 
 // Leaflet with OpenStreetMap tiles. No API token is required, which avoids
 // vendor lock in. Interactivity is intentionally light, in line with a
@@ -37,6 +85,7 @@ export default function MapView({ geojson }: Props) {
   // Determine which pillars are actually present in the data
   const activePillars = [...new Set(points.map((f) => f.properties.pillar))];
   const hasLines = lines.length > 0;
+  const labels = useLangLabels();
 
   return (
     <div className="relative overflow-hidden rounded-md border border-rule" style={{ height: 460 }}>
@@ -93,7 +142,7 @@ export default function MapView({ geojson }: Props) {
         style={{ pointerEvents: "auto" }}
       >
         <p className="mb-1.5 font-semibold text-charcoal/70" style={{ fontSize: "0.65rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-          Legend
+          {labels.legendTitle}
         </p>
         <ul className="flex flex-col gap-1">
           {activePillars.map((pillar) => (
@@ -102,13 +151,13 @@ export default function MapView({ geojson }: Props) {
                 className="inline-block h-2.5 w-2.5 shrink-0 rounded-full"
                 style={{ backgroundColor: pillarColors[pillar] ?? "#3B7EA1" }}
               />
-              <span className="text-charcoal/80">{pillarLabels[pillar] ?? pillar}</span>
+              <span className="text-charcoal/80">{labels.pillarLabel(pillar)}</span>
             </li>
           ))}
           {hasLines && (
             <li className="flex items-center gap-2">
               <span className="inline-block h-0.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: "#0B3D2E", borderTop: "2px dashed #0B3D2E" }} />
-              <span className="text-charcoal/80">River corridor</span>
+              <span className="text-charcoal/80">{labels.riverCorridor}</span>
             </li>
           )}
         </ul>
