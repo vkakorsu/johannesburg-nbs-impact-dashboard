@@ -39,7 +39,7 @@ export default function LangToggle() {
           lang === "en" ? "bg-emerald text-paper" : "text-charcoal/70 hover:text-charcoal"
         }`}
       >
-        EN
+        English
       </button>
       <span aria-hidden="true" className="px-0.5 text-charcoal/30">
         |
@@ -53,7 +53,7 @@ export default function LangToggle() {
           lang === "zu" ? "bg-emerald text-paper" : "text-charcoal/70 hover:text-charcoal"
         }`}
       >
-        ZU
+        isiZulu
       </button>
     </div>
   );
