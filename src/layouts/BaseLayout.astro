@@ -4,6 +4,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { getDictionaries, t } from "../i18n";
 import { buildClientDictionaries } from "../data";
+import Analytics from "@vercel/analytics/astro";
 
 interface Props {
   title?: string;
@@ -32,6 +33,7 @@ const pageDescription = description ?? t("site.tagline");
     <meta property="og:type" content="website" />
     <!-- Dictionaries are embedded once so the language toggle is instant and works offline. -->
     <script type="application/json" id="suncasa-i18n" set:html={JSON.stringify(dictionaries)} />
+    <Analytics />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
